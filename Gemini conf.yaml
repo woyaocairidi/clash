@@ -1,0 +1,761 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+external-controller: 127.0.0.1:9090
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geoip.dat
+  geosite: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geosite.dat
+  mmdb: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/country.mmdb
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  nameserver:
+    - 119.29.29.29
+    - 114.114.114.114
+    - 223.5.5.5
+    - 8.8.8.8
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fallback:
+    - https://cloudflare-dns.com/dns-query
+  fake-ip-filter:
+    - '*.local'
+    - localhost
+    - '*.lan'
+    - '*.qq.com'
+    - '*.apple.com'
+    - '*.icloud.com'
+    - '*.stun.playstation.net'
+    - '*.xboxlive.com'
+
+
+proxy-providers:
+
+
+proxy-groups:
+  - name: Hong Kong
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*(🇭🇰|香港|HK|(?i)Hong))^((?!(beup|手游|游戏(?i)Game)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+
+  - name: Taiwan
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*((?i)🇨🇳|台|台湾|台北|新北|桃园|台中|台南|高雄|基隆|新竹|嘉义|苗栗|彰化|南投|云林|屏东|台东|花莲|宜兰|澎湖|金门|连江|TW|Taiwan))^((?!(港|日|韩|新|美|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
+
+  - name: Japan
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*(日本|东京|東京|大阪|JP|(?i)Japan))^((?!(手游|游戏(?i)Game)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+
+  - name: Korea
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*(🇰🇷|首尔|春川|韩国|韩|KR|(?i)Korea))^((?!(🇺🇦|游戏(?i)Game)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+
+  - name: Singapore
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*((?i)🇸🇬|新|狮|獅|坡|新加坡|星|星加坡|星洲|狮城|SG|Singapore))^((?!(订阅|港|台|日|韩|美|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+
+  - name: United States
+    type: select
+    use:
+      - liangxin
+    filter: "(?=.*((?i)🇺🇸|美|美国|美利坚合众国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|华盛顿|内华达|蒙大纳|怀拥明州|菲尼克斯|阿尔伯克基|丹佛|US|United States|States|American))^((?!(港|台|日|韩|新|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+
+  - name: Global
+    type: select
+    proxies:
+      - Japan
+      - Singapore
+      - Hong Kong
+      - United States
+      - Select
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png
+
+  - name: Select
+    type: select
+    use:
+      - liangxin
+    proxies:
+      - Singapore
+      - Hong Kong
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png
+
+  - name: Telegram
+    type: select
+    proxies:
+      - Singapore
+      - Hong Kong
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+
+  - name: Emby
+    type: select
+    proxies:
+      - Select
+      - Singapore
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/airport/2_Emby1.png
+
+  - name: Emby SG
+    type: select
+    proxies:
+      - Singapore
+    icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/airport/2_Emby2.png
+
+  - name: Sesei
+    type: select
+    proxies:
+      - Ai
+    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/03CNSoft/ApplePodcasts(1).png
+
+  - name: YouTube
+    type: select
+    proxies:
+      - Global
+      - United States
+      - Singapore
+      - Ai
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+
+  - name: TikTok
+    type: select
+    proxies:
+      - Global
+      - Japan
+      - Singapore
+      - United States
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok_1.png
+
+  - name: Github
+    type: select
+    proxies:
+      - Hong Kong
+      - Singapore
+      - Japan
+      - Global
+      - United States
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png
+
+  - name: '115'
+    type: select
+    proxies:
+      - Hong Kong
+    icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/collection/115pan3.png
+
+  - name: Twitter
+    type: select
+    proxies:
+      - Japan
+      - United States
+      - Hong Kong
+      - Singapore
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+
+  - name: Netflix
+    type: select
+    proxies:
+      - Singapore
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+
+  - name: Disney
+    type: select
+    proxies:
+      - Singapore
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png
+
+  - name: ChatGPT
+    type: select
+    proxies:
+      - United States
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+
+  - name: pikpak
+    type: select
+    proxies:
+      - Singapore
+    url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/Forward/Pan_pikpak.png
+
+  - name: bing
+    type: select
+    proxies:
+      - United States
+      - Ai
+    url: http://www.qualcomm.cn/generate_204
+    icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/bing.png
+
+  - name: Threads
+    type: select
+    proxies:
+      - United States
+      - Facebook
+    icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/threads.png
+
+  - name: Instagram
+    type: select
+    proxies:
+      - United States
+      - Facebook
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Instagram.png
+
+  - name: Facebook
+    type: select
+    proxies:
+      - Singapore
+      - United States
+      - Hong Kong
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/04ProxySoft/facebook(3).png
+
+  - name: 网易云音乐
+    type: select
+    proxies:
+      - DIRECT
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
+
+  - name: Spotify
+    type: select
+    proxies:
+      - Taiwan
+      - United States
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+
+  - name: TestFlight
+    type: select
+    proxies:
+      - Hong Kong
+      - DIRECT
+    url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/03CNSoft/testflight(2).png
+
+  - name: Microsoft
+    type: select
+    proxies:
+      - Hong Kong
+      - Singapore
+      - DIRECT
+      - United States
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/03CNSoft/microsoft.png
+
+  - name: Apple
+    type: select
+    proxies:
+      - DIRECT
+      - Hong Kong
+      - REJECT
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png
+
+  - name: Apple update
+    type: select
+    proxies:
+      - Reject
+      - Direct
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png
+
+  - name: Direct
+    type: select
+    proxies:
+      - DIRECT
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+
+  - name: Reject
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+    url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
+
+  - name: 国际代理
+    type: select
+    proxies:
+      - Hong Kong
+      - Japan
+      - Singapore
+      - Global
+    url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+
+  - name: Ai
+    type: select
+    proxies:
+      - Select
+      - Singapore
+      - United States
+    icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/Forward/Intelligence_1.png
+
+rule-providers:
+  Sese:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/woyaocairidi/sese_rules/refs/heads/main/sese.list
+    path: ./rule-providers/Sese.list
+    interval: 86400
+  Ai_rules:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/woyaocairidi/airules_us/refs/heads/main/ai.list
+    path: ./rule-providers/Ai_rules.list
+    interval: 86400
+  Threads:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list
+    path: ./rule-providers/Threads.list
+    interval: 86400
+  '115':
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/115/115.list
+    path: ./rule-providers/115.list
+    interval: 86400
+  Bing_list:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.list
+    path: ./rule-providers/Bing_list.list
+    interval: 86400
+  PikPak:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PikPak/PikPak.list
+    path: ./rule-providers/PikPak.list
+    interval: 86400
+  TestFlight:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TestFlight/TestFlight.list
+    path: ./rule-providers/TestFlight.list
+    interval: 86400
+  Speedtest测速:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.list
+    path: ./rule-providers/Speedtest测速.list
+    interval: 86400
+  Emby:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/woyaocairidi/Emby-rules/refs/heads/main/Emby.list
+    path: ./rule-providers/Emby.list
+    interval: 86400
+  emby_sg_list:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/woyaocairidi/Emby2-rules/refs/heads/main/emby_sg.list
+    path: ./rule-providers/emby_sg_list.list
+    interval: 86400
+  TikTok:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
+    path: ./rule-providers/TikTok.list
+    interval: 86400
+  GitHub:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list
+    path: ./rule-providers/GitHub.list
+    interval: 86400
+  YouTube:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
+    path: ./rule-providers/YouTube.list
+    interval: 86400
+  YouTube Music:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTubeMusic/YouTubeMusic.list
+    path: ./rule-providers/YouTube Music.list
+    interval: 86400
+  Spotify:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.list
+    path: ./rule-providers/Spotify.list
+    interval: 86400
+  Twitter:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.list
+    path: ./rule-providers/Twitter.list
+    interval: 86400
+  Netflix:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list
+    path: ./rule-providers/Netflix.list
+    interval: 86400
+  Disney:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list
+    path: ./rule-providers/Disney.list
+    interval: 86400
+  ChatGPT:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
+    path: ./rule-providers/ChatGPT.list
+    interval: 86400
+  Telegram:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+    path: ./rule-providers/Telegram.list
+    interval: 86400
+  Instagram:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.list
+    path: ./rule-providers/Instagram.list
+    interval: 86400
+  Facebook:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.list
+    path: ./rule-providers/Facebook.list
+    interval: 86400
+  网易云音乐:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic.list
+    path: ./rule-providers/网易云音乐.list
+    interval: 86400
+  Microsoft:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list
+    path: ./rule-providers/Microsoft.list
+    interval: 86400
+  Apple服务:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list
+    path: ./rule-providers/Apple服务.list
+    interval: 86400
+  Apple_Domain:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Domain.list
+    path: ./rule-providers/Apple_Domain.list
+    interval: 86400
+  China:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.list
+    path: ./rule-providers/China.list
+    interval: 86400
+  China_Domain:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China_Domain/China_Domain.list
+    path: ./rule-providers/China_Domain.list
+    interval: 86400
+  ChinaIPs:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs.list
+    path: ./rule-providers/ChinaIPs.list
+    interval: 86400
+  局域网地址:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.list
+    path: ./rule-providers/局域网地址.list
+    interval: 86400
+  China公司:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
+    path: ./rule-providers/China公司.list
+    interval: 86400
+  China域名:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+    path: ./rule-providers/ChinaDomain.list
+    interval: 86400
+  ChinaMedia:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.list
+    path: ./rule-providers/ChinaMedia.list
+    interval: 86400
+  全球加速:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/woyaocairidi/Global_rules/refs/heads/main/Global.list
+    path: ./rule-providers/全球加速.list
+    interval: 86400
+
+rules:
+  - DOMAIN,cloudflare-dns.com,Select
+  - DOMAIN,app-analytics-services.com,DIRECT
+  - DOMAIN,server2.cn2gias.uk,Emby
+  - DOMAIN-SUFFIX,challenges.cloudflare.com,Global
+  - DOMAIN-SUFFIX,googleapis.com,Ai
+  - DOMAIN-KEYWORD,uned,United States
+  - DOMAIN,youtubei.googleapis.com,YouTube
+  - IP-CIDR,194.221.250.50/32,Telegram
+  - DOMAIN,zy.lyezi.xyz,Emby
+  - DOMAIN,whatshub.top,REJECT
+  - DOMAIN-KEYWORD,funmedia,Emby
+  - DOMAIN,live.ottiptv.cc,DIRECT
+  - DOMAIN,cdn.jsdelivr.net,DIRECT
+  - DOMAIN,altstore.io,Japan
+  - DOMAIN,edge-125.xasha1.icloud-content.com.cn,DIRECT
+  - DOMAIN-KEYWORD,ashcloud,Global
+  - DOMAIN,ashford.com,Select
+  - DOMAIN,cflocal.xxlb.net,Emby
+  - DOMAIN,media.misaya.org,Emby
+  - DOMAIN,a.mobaiemby.site,Emby
+  - DOMAIN,cf.cinetrail.live,Emby
+  - DOMAIN,banma8.com,DIRECT
+  - DOMAIN,aya.220719.uk,Emby
+  - DOMAIN,invite.linuxdo.org,DIRECT
+  - DOMAIN,appstorrent.ru,Hong Kong
+  - DOMAIN,jfejuyvxee.cfd,Emby
+  - DOMAIN,emby.aixj.de,Emby
+  - DOMAIN,emby.chilledmelon.com,Emby
+  - DOMAIN-KEYWORD,lyezi,Emby
+  - DOMAIN,play.sportsteam368.com,DIRECT
+  - DOMAIN,l.poloemby.xyz,Emby SG
+  - DOMAIN,go.niscprts.com,REJECT
+  - DOMAIN,aaa.204cloud.com,Emby SG
+  - DOMAIN-KEYWORD,v2paw,Singapore
+  - DOMAIN,cola.porndx.art,Emby
+  - IP-CIDR,195.201.86.86/32,Emby SG
+  - IP-CIDR,202.61.195.252/32,Emby SG
+  - DOMAIN,music.mefun.vip,Emby
+  - DOMAIN,emby.echoflix.vip,Emby SG
+  - DOMAIN,v1.uhdnow.com,Emby
+  - IP-CIDR,154.40.33.88/32,Emby
+  - IP-CIDR,95.211.168.246/32,Emby
+  - DOMAIN,wgtv.ii00.cc,Emby
+  - DOMAIN,wptv.ii00.cc,Emby
+  - DOMAIN-SUFFIX,emby.younoyes.com,Emby
+  - DOMAIN,global-endpoint.anisaga.tv,Emby
+  - DOMAIN,52kdy.asia,Emby
+  - DOMAIN-SUFFIX,mt.sttss.de,Emby
+  - DOMAIN,plex.20120714.xyz,Emby
+  - DOMAIN-KEYWORD,heimuer,DIRECT
+  - IP-CIDR,152.53.67.239/32,Emby
+  - IP-CIDR,104.161.22.115/32,Emby
+  - IP-CIDR,66.187.76.29/32,Emby
+  - DOMAIN-SUFFIX,emby.as174.com,Emby
+  - DOMAIN-SUFFIX,jsq.mooguu.top,Emby
+  - IP-CIDR,152.53.14.71/32,Emby
+  - DOMAIN-SUFFIX,cc.embycc.link,Emby
+  - DOMAIN-SUFFIX,cc.carryz.net,Emby
+  - DOMAIN-SUFFIX,dx2.carryz.net,Emby
+  - DOMAIN-SUFFIX,embymv.link,Emby SG
+  - IP-CIDR,193.123.232.141/32,Emby
+  - IP-CIDR,168.119.137.205/32,Emby
+  - IP-CIDR,198.19.0.160/32,Emby
+  - IP-CIDR,168.138.45.100/32,Emby
+  - DOMAIN-SUFFIX,carryz.net,Emby
+  - DOMAIN-SUFFIX,fun.poloemby.xyz,Emby SG
+  - DOMAIN-KEYWORD,monisaiche,Emby
+  - DOMAIN-SUFFIX,1024.name,Emby
+  - IP-CIDR,46.3.99.99/32,Emby
+  - IP-CIDR,46.3.101.30/32,Emby
+  - IP-CIDR,154.29.154.124/32,Emby
+  - IP-CIDR,208.87.240.15/32,Emby
+  - IP-CIDR,152.67.205.182/32,Emby
+  - IP-CIDR,154.29.145.151/32,Emby
+  - DOMAIN-SUFFIX,tvv.poloemby.xyz,Emby
+  - IP-CIDR,77.90.22.101/32,Emby
+  - DOMAIN-SUFFIX,emby.711.lol,Emby SG
+  - IP-CIDR,192.99.35.111/32,Emby
+  - DOMAIN-SUFFIX,cf.lemby.me,Emby
+  - DOMAIN-SUFFIX,emby.cn2gias.uk,Emby
+  - DOMAIN-SUFFIX,a.mobaiemby.site,Emby
+  - DOMAIN-SUFFIX,a.emby.my,Emby
+  - DOMAIN-SUFFIX,sf.811861.xyz,Emby
+  - DOMAIN-SUFFIX,emby.doubon.cc,Emby
+  - IP-CIDR,135.180.189.141/32,Emby
+  - DOMAIN,hxd.as174.com,Emby
+  - DOMAIN,tanhuatv.site,Emby
+  - DOMAIN,zzk.spls.vip,Emby
+  - DOMAIN,gd.9521732.xyz,Emby
+  - IP-CIDR,140.83.59.29/32,Emby
+  - IP-CIDR,158.101.207.134/32,Emby
+  - IP-CIDR,130.162.128.132/32,Emby
+  - IP-CIDR,132.226.229.139/32,Emby
+  - DOMAIN,api.revenuecat.com,REJECT
+  - DOMAIN-KEYWORD,plex,Emby
+  - DOMAIN,auto.polodns.xyz,Emby
+  - IP-CIDR,152.53.19.231/32,Emby
+  - DOMAIN-SUFFIX,wgtv.ii00.cc,Emby
+  - DOMAIN,dl.ccemby.ga,Emby
+  - DOMAIN-SUFFIX,cdn.bili.rip,Emby
+  - DOMAIN-SUFFIX,sf.poloemby.xyz,Emby
+  - DOMAIN-SUFFIX,dl.carryz.net,Emby
+  - DOMAIN-KEYWORD,tidal,United States
+  - DOMAIN-KEYWORD,meta,United States
+  - DOMAIN-SUFFIX,imagine.meta.com,United States
+  - DOMAIN-SUFFIX,brad.google.com,United States
+  - DOMAIN-SUFFIX,epg.112114.xyz,DIRECT
+  - IP-CIDR,148.135.93.213/32,DIRECT
+  - DOMAIN-KEYWORD,migu,DIRECT
+  - DOMAIN-SUFFIX,ip-api.com,United States
+  - DOMAIN-KEYWORD,stream-link,Select
+  - DOMAIN-KEYWORD,olelive,Singapore
+  - DOMAIN-KEYWORD,haiwaikan,Singapore
+  - DOMAIN-SUFFIX,www.olevod.com,Select
+  - DOMAIN-SUFFIX,appstorrent.ru,Select
+  - DOMAIN-SUFFIX,cc.coemn.com,Emby SG
+  - DOMAIN-SUFFIX,sg.ii00.cc,Emby
+  - DOMAIN-SUFFIX,gg.ii00.cc,Emby
+  - DOMAIN-SUFFIX,top.nfm3u8.com,DIRECT
+  - DOMAIN-SUFFIX,infuseku.xyz,DIRECT
+  - DOMAIN-KEYWORD,dmm,Japan
+  - DOMAIN-SUFFIX,cf.xmsl.org,Emby
+  - DOMAIN-SUFFIX,cc.ccemby.tk,Emby
+  - DOMAIN-KEYWORD,pglstatp,Reject
+  - DOMAIN-KEYWORD,adview,Reject
+  - DOMAIN-SUFFIX,gdt.qq.com,Reject
+  - DOMAIN,admusicpic.music.126.net,Reject
+  - DOMAIN,iadmat.nosdn.127.net,Reject
+  - DOMAIN,iadmusicmat.music.126.net,Reject
+  - DOMAIN,iadmusicmatvideo.music.126.net,Reject
+  - DOMAIN-SUFFIX,applovin.com,Reject
+  - DOMAIN-SUFFIX,applvn.com,Reject
+  - DOMAIN-KEYWORD,emby,Emby
+  - DOMAIN-KEYWORD,tiktok,TikTok
+  - DOMAIN-KEYWORD,github,Github
+  - DOMAIN-KEYWORD,spotify,Spotify
+  - DOMAIN-KEYWORD,twitter,Twitter
+  - DOMAIN-KEYWORD,netflix,Netflix
+  - DOMAIN-KEYWORD,disney,Disney
+  - DOMAIN-KEYWORD,openai,ChatGPT
+  - DOMAIN-KEYWORD,telegram,Telegram
+  - DOMAIN-KEYWORD,instagram,Instagram
+  - DOMAIN-KEYWORD,facebook,Facebook
+  - DOMAIN-KEYWORD,microsoft,Microsoft
+  - DOMAIN,appstoreconnect.apple.com,Apple update
+  - DOMAIN,iosapps-ssl.itunes.apple.com,Apple update
+  - DOMAIN,itcmobile.itunes.apple.com,Apple update
+  - DOMAIN,mesu.apple.com,Apple update
+  - DOMAIN,gdmf.apple.com,Apple update
+  - DOMAIN,updates-http.cdn-apple.com,Apple update
+  - DOMAIN,xp.apple.com,Apple update
+  - DOMAIN-KEYWORD,apple,Apple
+  - DOMAIN-KEYWORD,testflight,Apple
+  - DOMAIN-KEYWORD,icloud,Apple
+  - DOMAIN-KEYWORD,sogou,Direct
+  - DOMAIN-SUFFIX,jd.com,Direct
+  - DOMAIN-KEYWORD,meituan,Direct
+  - DOMAIN-KEYWORD,steam,国际代理
+  - DOMAIN-KEYWORD,xbox,国际代理
+  - GEOIP,CN,Direct
+  - DOMAIN-KEYWORD,stun,DIRECT
+  - DST-PORT,3478,DIRECT
+  - DST-PORT,19302,DIRECT
+  - RULE-SET,Sese,Sesei
+  - RULE-SET,Ai_rules,Ai
+  - RULE-SET,Threads,Threads
+  - RULE-SET,115,115
+  - RULE-SET,Bing_list,United States
+  - RULE-SET,PikPak,pikpak
+  - RULE-SET,TestFlight,TestFlight
+  - RULE-SET,Speedtest测速,DIRECT
+  - RULE-SET,Emby,Emby
+  - RULE-SET,emby_sg_list,Emby SG
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,GitHub,Github
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,YouTube Music,YouTube
+  - RULE-SET,Spotify,Spotify
+  - RULE-SET,Twitter,Twitter
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Disney,Disney
+  - RULE-SET,ChatGPT,ChatGPT
+  - RULE-SET,Telegram,Telegram
+  - RULE-SET,Instagram,Instagram
+  - RULE-SET,Facebook,Facebook
+  - RULE-SET,网易云音乐,网易云音乐
+  - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,Apple服务,Apple
+  - RULE-SET,Apple_Domain,Apple
+  - RULE-SET,China,Direct
+  - RULE-SET,China_Domain,Direct
+  - RULE-SET,ChinaIPs,Direct
+  - RULE-SET,局域网地址,Direct
+  - RULE-SET,China公司,Direct
+  - RULE-SET,China域名,Direct
+  - RULE-SET,ChinaMedia,Direct
+  - RULE-SET,全球加速,Global
+  - MATCH,Global
