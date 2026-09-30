@@ -16,6 +16,9 @@ dns:
   enable: true
   ipv6: false
   enhanced-mode: fake-ip
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
   nameserver:
     - 119.29.29.29
     - 114.114.114.114
@@ -35,50 +38,57 @@ dns:
     - '*.stun.playstation.net'
     - '*.xboxlive.com'
 
-
 proxy-providers:
-
+  liangxin:
+    type: http
+    url: "https://your-subscription-url-here" # 请在此填入实际的节点订阅链接
+    path: ./providers/liangxin.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://cp.cloudflare.com/generate_204
+      interval: 300
 
 proxy-groups:
   - name: Hong Kong
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*(🇭🇰|香港|HK|(?i)Hong))^((?!(beup|手游|游戏(?i)Game)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 
   - name: Taiwan
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*((?i)🇨🇳|台|台湾|台北|新北|桃园|台中|台南|高雄|基隆|新竹|嘉义|苗栗|彰化|南投|云林|屏东|台东|花莲|宜兰|澎湖|金门|连江|TW|Taiwan))^((?!(港|日|韩|新|美|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
 
   - name: Japan
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*(日本|东京|東京|大阪|JP|(?i)Japan))^((?!(手游|游戏(?i)Game)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 
   - name: Korea
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*(🇰🇷|首尔|春川|韩国|韩|KR|(?i)Korea))^((?!(🇺🇦|游戏(?i)Game)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 
   - name: Singapore
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*((?i)🇸🇬|新|狮|獅|坡|新加坡|星|星加坡|星洲|狮城|SG|Singapore))^((?!(订阅|港|台|日|韩|美|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 
   - name: United States
     type: select
     use:
-      
+      - liangxin
     filter: "(?=.*((?i)🇺🇸|美|美国|美利坚合众国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|华盛顿|内华达|蒙大纳|怀拥明州|菲尼克斯|阿尔伯克基|丹佛|US|United States|States|American))^((?!(港|台|日|韩|新|英|平|邀|群|刷新|网|网易|网易云|网易云音乐|音乐|云音乐|Netease|Music|𝐌𝐮𝐬𝐢𝐜|Unbolck|Update|music|🎵|🎶|🎧)).)*$"
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 
@@ -96,7 +106,7 @@ proxy-groups:
   - name: Select
     type: select
     use:
-      
+      - liangxin
     proxies:
       - Singapore
       - Hong Kong
@@ -161,6 +171,9 @@ proxy-groups:
     url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png
 
+  - name: '115'
+    type: select
+    proxies:
       - Hong Kong
     icon: https://raw.githubusercontent.com/ginibond/ginibond/main/Icons/collection/115pan3.png
 
@@ -299,6 +312,16 @@ proxy-groups:
     url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
 
+  - name: 国际代理
+    type: select
+    proxies:
+      - Hong Kong
+      - Japan
+      - Singapore
+      - Global
+    url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+
   - name: Ai
     type: select
     proxies:
@@ -328,6 +351,13 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list
     path: ./rule-providers/Threads.list
+    interval: 86400
+  '115':
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/115/115.list
+    path: ./rule-providers/115.list
     interval: 86400
   Bing_list:
     type: http
@@ -541,6 +571,7 @@ rule-providers:
     interval: 86400
 
 rules:
+  # --- 1. 精确域名与特定服务覆盖规则 ---
   - DOMAIN,cloudflare-dns.com,Select
   - DOMAIN,app-analytics-services.com,DIRECT
   - DOMAIN,server2.cn2gias.uk,Emby
@@ -673,18 +704,6 @@ rules:
   - DOMAIN,iadmusicmatvideo.music.126.net,Reject
   - DOMAIN-SUFFIX,applovin.com,Reject
   - DOMAIN-SUFFIX,applvn.com,Reject
-  - DOMAIN-KEYWORD,emby,Emby
-  - DOMAIN-KEYWORD,tiktok,TikTok
-  - DOMAIN-KEYWORD,github,Github
-  - DOMAIN-KEYWORD,spotify,Spotify
-  - DOMAIN-KEYWORD,twitter,Twitter
-  - DOMAIN-KEYWORD,netflix,Netflix
-  - DOMAIN-KEYWORD,disney,Disney
-  - DOMAIN-KEYWORD,openai,ChatGPT
-  - DOMAIN-KEYWORD,telegram,Telegram
-  - DOMAIN-KEYWORD,instagram,Instagram
-  - DOMAIN-KEYWORD,facebook,Facebook
-  - DOMAIN-KEYWORD,microsoft,Microsoft
   - DOMAIN,appstoreconnect.apple.com,Apple update
   - DOMAIN,iosapps-ssl.itunes.apple.com,Apple update
   - DOMAIN,itcmobile.itunes.apple.com,Apple update
@@ -692,18 +711,8 @@ rules:
   - DOMAIN,gdmf.apple.com,Apple update
   - DOMAIN,updates-http.cdn-apple.com,Apple update
   - DOMAIN,xp.apple.com,Apple update
-  - DOMAIN-KEYWORD,apple,Apple
-  - DOMAIN-KEYWORD,testflight,Apple
-  - DOMAIN-KEYWORD,icloud,Apple
-  - DOMAIN-KEYWORD,sogou,Direct
-  - DOMAIN-SUFFIX,jd.com,Direct
-  - DOMAIN-KEYWORD,meituan,Direct
-  - DOMAIN-KEYWORD,steam,国际代理
-  - DOMAIN-KEYWORD,xbox,国际代理
-  - GEOIP,CN,Direct
-  - DOMAIN-KEYWORD,stun,DIRECT
-  - DST-PORT,3478,DIRECT
-  - DST-PORT,19302,DIRECT
+
+  # --- 2. RULE-SET 规则集优先匹配 ---
   - RULE-SET,Sese,Sesei
   - RULE-SET,Ai_rules,Ai
   - RULE-SET,Threads,Threads
@@ -738,4 +747,30 @@ rules:
   - RULE-SET,China域名,Direct
   - RULE-SET,ChinaMedia,Direct
   - RULE-SET,全球加速,Global
+
+  # --- 3. 广域关键字与 GEOIP 兜底匹配 ---
+  - DOMAIN-KEYWORD,emby,Emby
+  - DOMAIN-KEYWORD,tiktok,TikTok
+  - DOMAIN-KEYWORD,github,Github
+  - DOMAIN-KEYWORD,spotify,Spotify
+  - DOMAIN-KEYWORD,twitter,Twitter
+  - DOMAIN-KEYWORD,netflix,Netflix
+  - DOMAIN-KEYWORD,disney,Disney
+  - DOMAIN-KEYWORD,openai,ChatGPT
+  - DOMAIN-KEYWORD,telegram,Telegram
+  - DOMAIN-KEYWORD,instagram,Instagram
+  - DOMAIN-KEYWORD,facebook,Facebook
+  - DOMAIN-KEYWORD,microsoft,Microsoft
+  - DOMAIN-KEYWORD,apple,Apple
+  - DOMAIN-KEYWORD,testflight,Apple
+  - DOMAIN-KEYWORD,icloud,Apple
+  - DOMAIN-KEYWORD,sogou,Direct
+  - DOMAIN-SUFFIX,jd.com,Direct
+  - DOMAIN-KEYWORD,meituan,Direct
+  - DOMAIN-KEYWORD,steam,国际代理
+  - DOMAIN-KEYWORD,xbox,国际代理
+  - DOMAIN-KEYWORD,stun,DIRECT
+  - DST-PORT,3478,DIRECT
+  - DST-PORT,19302,DIRECT
+  - GEOIP,CN,Direct
   - MATCH,Global
